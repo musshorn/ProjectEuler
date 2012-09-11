@@ -1,5 +1,3 @@
-from itertools import permutations
-
 def split(number):
 	out = []
 	for char in str(number):
