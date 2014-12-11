@@ -1,8 +1,23 @@
+'''
+Interesting tidbit:
+
+	The numbers don't seem to be "evenly" distributed. They only occur
+	< 10,000
+	200k
+	300k
+	400k
+	700k
+	900k
+
+So there's some insight to be had which would speed this up.
+'''
+
 def factorial(n):
 	if n == 1 or n == 0:
 		return 1
 	else:
 		return n*factorial(n-1)
+
 def sumDigits(n):
 	total = 0
 	for num in str(n):
@@ -10,18 +25,22 @@ def sumDigits(n):
 		total += fact
 	return total
 
-from time import sleep
-
 count = 0
-for x in range(100000):
-	t = x
-	results = [t]
-	while sumDigits(t) not in results and len(results) <= 60:
-		t = sumDigits(t)
-		results.append(t)
-	if len(results) == 60:
-		count+=1
-		print t#,results
-	if x % 1000 == 0:
-		print x
-print count
+for j in range(1000000):
+	seen = set()
+	i = j
+	seen.add(j)
+	length = 1
+	while True:
+		i = sumDigits(i)
+		if i not in seen:
+			seen.add(i)
+			length += 1
+		else:
+			break
+	if length == 60:
+		print "DING: ", j
+		count += 1
+	if j % 100000 == 0:
+		print j
+print count	
